@@ -39,7 +39,7 @@ function NestedUser(props) {
         }
     } = props;
 
-    const url = process.env.REACT_APP_API_PLACEHOLDER+name
+    const url = 'https://jsonplaceholder.typicode.com/posts?userId='+name
 
     const [data, setdata] = useState([]);
     const [error, setError] = useState('');
