@@ -5,7 +5,6 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios'
 import Button from '@material-ui/core/Button';
-import swal from 'sweetalert';
 import Swal from 'sweetalert2'
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -31,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) =>
 function NestedUser(props) {
 
     const classes = useStyles();
-    // const showAlert = useAllert;
 
     const {
         match: {
@@ -43,6 +41,7 @@ function NestedUser(props) {
 
     const [data, setdata] = useState([]);
     const [error, setError] = useState('');
+    const [id, setId] = useState(0);
     
 
     useEffect(() => {
@@ -55,28 +54,34 @@ function NestedUser(props) {
             })
     }, []);
 
-    const onAlert = id => {
-        swal({
+    const onDelete = (idPost, key) => {
+      axios.delete(`https://jsonplaceholder.typicode.com/posts/${idPost}`)
+      .then(res => {
+        if (res.status === 200) {
+          Swal.fire({
             title: "Are you sure?",
-            text: "Once deleted, you will not be able to recover this imaginary file!",
             icon: "warning",
-            buttons: true,
-            dangerMode: true,
-          })
-          .then((willDelete) => {
-            if (willDelete) {
-              swal("Poof! Your imaginary file has been deleted!", {
-                icon: "success",
-              });
-              return fetch(process.env.REACT_APP_API_POST+id, {
-                method: 'delete'
-              })
-              .then(response => response.json());
-            } else {
-              swal("Your imaginary file is safe!");
+            showCancelButton: true,
+            confirmButtonColor: "#3085d6",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "Yes, delete it!"
+          }).then(result => {
+            if (result.value) {
+              Swal.fire(
+                "Deleted!",
+                `Your post with id: ${idPost} is deleted.`,
+                "success"
+              )
             }
-          });
-    }
+          })
+        } else {
+          Swal.fire("There is something wrong ", "error")
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+    };
 
     const onEdit = event => {
         Swal.mixin({
@@ -104,10 +109,13 @@ function NestedUser(props) {
           })
     }
 
+    const onCreate = event => {
+
+    }
+
 
     return (
         <div>
-            {console.log(data.length)}
             {data.length > 0 && data.map((item, key) => {
                 const idPost = item.id
                 return (
@@ -122,20 +130,20 @@ function NestedUser(props) {
                         </Typography>
                     </Paper> 
                     <Button
-                    onClick={event => onEdit(item)}
+                    onClick={event => onEdit(event)}
                     variant="contained"
                     color="primary"
                     className={classes.button}>
                         Edit
                     </Button>
                     <Button
-                    onClick={event => onAlert(item.id, item.title)}
+                    onClick={() => onDelete(item.id, key)}
                     variant="contained" 
                     color="secondary" 
                     className={classes.button}>
                         Delete
                     </Button>
-                    
+                    {console.log(id)}
                     </p>
                 );
             })} 

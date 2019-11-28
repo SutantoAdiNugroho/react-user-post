@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import Axios from 'axios';
 
 function Copyright() {
     return (
@@ -76,8 +77,16 @@ function SignUp(props) {
                 }}
                 validate={validationForm}
                 onSubmit={(values, {setSubmitting}) => {
-                  localStorage.setItem("user", JSON.stringify(values))
-                  props.history.push("/signin")
+                  Axios
+                    .post("http://localhost:5001/", values)
+                    .then(response => {
+                      if (response.status === 201) {
+                        localStorage.setItem("user", JSON.stringify(values))   
+                        props.history.push("/signin")
+                      }
+                    })
+                  // localStorage.setItem("user", JSON.stringify(values))
+                  // props.history.push("/signin")
                 }}
                 >
                   {({
