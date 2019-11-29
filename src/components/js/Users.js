@@ -37,7 +37,7 @@ export default class Users extends Component {
 
     componentDidMount = () => {
         axios
-            .get('https://jsonplaceholder.typicode.com/users')
+            .get(`${process.env.REACT_APP_API_LIST_USERS}/users`)
             .then(response => {
                 this.setState({data : response.data});
             })

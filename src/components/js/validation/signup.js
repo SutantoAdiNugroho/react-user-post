@@ -1,25 +1,16 @@
-export const validationForm = ({ firstName, lastName, email, password }) => {
+import axios from 'axios'
+
+export const validationForm = async values => {
     let errors = {};
 
-    if (!email) {
-        errors.email = "Required";
-    } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i.test(email)) {
-        errors.email = "Invalid email format";
-    }
+    try {
+        const { data: result } = await axios.post(
+            `${process.env.REACT_APP_API}/validate/signup`,
+            values
+        );
 
-    if (!password) {
-        errors.password = "Required";
-    } else if (password.length < 8) {
-        errors.password = "Password must be at least 8 characters long";
+        return { ...errors, ...result };
+    } catch (err) {
+        throw err;
     }
-
-    if (!firstName) {
-        errors.firstName = "Required";
-    }
-
-    if (!lastName) {
-        errors.lastName = "Required";
-    }
-
-    return errors;
 };

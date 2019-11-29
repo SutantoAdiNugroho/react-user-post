@@ -13,6 +13,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import axios from 'axios'
 
 function Copyright() {
     return (
@@ -55,9 +56,11 @@ function Copyright() {
 function SignIn(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({ email: "", password: "" });
+    const [data, setData] = React.useState([])
 
     const handleSubmit = event => {
         event.preventDefault();
+
         const user = JSON.parse(localStorage.getItem("user"));
         if (user.email === state.email && user.password === state.password) {
             localStorage.setItem("isLogin", JSON.stringify(true));

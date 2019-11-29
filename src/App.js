@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {Header, Home, About, Contact, Users, SignIn, SignUp, NestedUser} from './components/js'
+import {Header, Home, About, Contact, Users, SignIn, SignUp, NestedUser, Todo} from './components/js'
 
 function App() {
   return (
@@ -28,6 +28,9 @@ function App() {
           </Route>
           <Route path="/signup" exact={true}>
             <SignUp />
+          </Route>
+          <Route path="/todo" exact={true}>
+            <Todo />
           </Route>
         </Switch>
       </div>

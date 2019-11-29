@@ -22,6 +22,9 @@ function Header(props) {
             <Link style={{margin:"0 10px"}} to="/users">Users</Link>
         </li>
         <li>
+            <Link style={{margin:"0 10px"}} to="/todo">Todo</Link>
+        </li>
+        <li>
             <a style={{margin:"0 10px"}} href="/" onClick={logOut}>Logout</a>
         </li>
     </ul> 
