@@ -56,20 +56,27 @@ function Copyright() {
 function SignIn(props) {
     const classes = useStyles();
     const [state, setState] = React.useState({ email: "", password: "" });
-    const [data, setData] = React.useState([])
 
     const handleSubmit = event => {
         event.preventDefault();
 
-        const user = JSON.parse(localStorage.getItem("user"));
-        if (user.email === state.email && user.password === state.password) {
-            localStorage.setItem("isLogin", JSON.stringify(true));
-            if (JSON.parse(localStorage.getItem("isLogin"))) {
-                props.history.push("/");
-            }
-        } else {
-            alert("email atau password salah");
-        }
+        const email = state.email
+        const password = state.password
+
+        
+
+        axios.post(`${process.env.REACT_APP_API}/users/login`, {email, password})
+        .then(result => {
+          if (result.data.message === 'Email or password is wrong!') {
+              alert(result.data.message)
+              return null
+          }
+
+            localStorage.setItem('user', JSON.stringify(result.data))
+            localStorage.setItem("isLogin", true)
+            props.history.push('/todo')
+
+          })
     };
 
     const handleChange = event => {

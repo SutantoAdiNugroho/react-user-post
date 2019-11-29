@@ -38,6 +38,22 @@ export default class Todo extends React.Component {
 
     }
 
+    addOne = values => {
+        const user = JSON.parse(localStorage.getItem("user"));
+        axios
+            .post(`${process.env.REACT_APP_API}/todo`, {
+                ...values,
+                name: user.firstName,
+                email: user.email
+            })
+            .then(response => {
+                if (response.status === 201) {
+                    alert("Your new todo is added")
+                    this.fetch();
+                }
+            });
+    }
+
     render () {
         return (
             <div>
@@ -45,19 +61,8 @@ export default class Todo extends React.Component {
                 initialValues={{
                     todo: ""
                 }}
-                onSubmit={(values, {setSubmitting}) => {
-                    
-                    const user = JSON.parse(localStorage.getItem("user"));
-                    const fullName = user.firstName + " " + user.lastName
-                    const email = user.email
-
-                    axios
-                    .post("http://localhost:5000/todos", {...values, fullName, email})
-                    .then(response => {
-                      if (response.status === 200) {
-                        
-                      }
-                    })
+                onSubmit={values => {
+                    this.addOne(values);
                   }}
                 >
                     {({
