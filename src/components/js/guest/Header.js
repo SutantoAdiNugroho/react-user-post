@@ -1,24 +1,21 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import AppBar from '@material-ui/core/AppBar';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 
-export default function Header() {
+export default function Header() {    
+
     return (
-        <ul style={{display: "flex", justifyContent:"center", listStyleType:"none"}}>
-            <li>
-                <Link style={{margin: "0 10px"}} to="/">Home</Link>
-            </li>
-            <li>
-                <Link style={{margin: "0 10px"}} to="/about">About</Link>
-            </li>
-            <li>
-                <Link style={{margin: "0 10px"}} to="/contact">Contact</Link>
-            </li>
-            <li>
-            <Link style={{margin: "0 10px"}} to="/signin">Sign In</Link>
-        </li>
-        <li>
-            <Link style={{margin: "0 10px"}} to="/signup">Sign Up</Link>
-        </li>
-        </ul> 
+        <AppBar position="static">
+          <Tabs>
+            <Tab style={{margin: "0 10px"}} label="Home" href="/"/>
+            <Tab style={{margin: "0 10px"}} label="About" href="/about"/>
+            <Tab style={{margin: "0 10px"}} label="Contact" href="/contact"/>
+            <Tab style={{margin: "0 10px"}} label="Sign In" href="/signin"/>
+            <Tab style={{margin: "0 10px"}} label="Sign Up" href="/signup"/>
+          </Tabs>
+        </AppBar>
     )
 }

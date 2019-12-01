@@ -23,7 +23,7 @@ const swalWithBootstrapButtons = swal.mixin({
     buttonsStyling: false
   })
 
-export default class Todo extends React.Component {
+export default class TodoMongoose extends React.Component {
     constructor(props) {
         super(props);
 
@@ -35,7 +35,7 @@ export default class Todo extends React.Component {
     showTodo = () => {
         const user = JSON.parse(localStorage.getItem("user"))
         axios
-            .get(`${process.env.REACT_APP_API}/todos/email/${user.email}`)
+            .get(`https://api-live-mongodb-mongoose-adi.herokuapp.com/todos/`)
             .then(response => {
                 this.setState({ data: response.data.data});
             })
@@ -52,10 +52,9 @@ export default class Todo extends React.Component {
         const user = JSON.parse(localStorage.getItem("user"));
 
         axios
-            .post(`${process.env.REACT_APP_API}/todos`, {
+            .post(`https://api-live-mongodb-mongoose-adi.herokuapp.com/todos/`, {
                 ...values,
-                name: user.firstName,
-                email: user.email
+                status : true
             })
             .then(response => {
                 if (response.status === 200) {
@@ -67,86 +66,6 @@ export default class Todo extends React.Component {
                     this.showTodo();
                 }
             });
-    }
-
-    deleteOne = (id, todo) => {
-        swalWithBootstrapButtons.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Yes, delete it!',
-            cancelButtonText: 'No, cancel!',
-            reverseButtons: true
-          }).then((result) => {
-            if (result.value) {
-                axios
-                    .delete(`${process.env.REACT_APP_API}/todos/${id}`)
-                    .then(response => {
-                        if (response.status === 200) {
-                            swalWithBootstrapButtons.fire(
-                                "Deleted!",
-                                `Todo ${todo} is deleted.`,
-                                "success"
-                            );
-                        }
-                    })
-                    .then(() => {
-                        this.showTodo();
-                    });
-            } else if (
-              result.dismiss === swal.DismissReason.cancel
-            ) {
-              swalWithBootstrapButtons.fire(
-                'Cancelled',
-                'Your imaginary file is safe :)',
-                'error'
-              )
-            }
-          })
-    }
-
-    updateOne = id => {
-        console.log(id);
-        
-        swal.mixin({
-            input: 'text',
-            confirmButtonText: 'Next &rarr;',
-            showCancelButton: true,
-            progressSteps: ['1']
-          }).queue([
-            {
-              title: 'Update Todo',
-              text: 'Change your todo'
-            }
-          ]).then((result) => {
-            if (result.value) {
-              const answer = result.value
-              axios.
-                    put(`${process.env.REACT_APP_API}/todos/${id}`, {todo : answer})
-                    .then(response => {
-                        if (response.status === 200) {
-                            console.log(answer);
-                            
-                            swal.fire({
-                                title: 'All done!',
-                                html: `
-                                  Your Todo has been update:
-                                  <pre><code>${answer}</code></pre>
-                                `,
-                                confirmButtonText: 'Done!'
-                              })
-                              this.showTodo();
-                        } else {
-                            swal.fire(
-                                'Cancelled',
-                                'Theres some error when update',
-                                'error'
-                              )
-                        }
-                    })
-            }
-          })
     }
 
     render () {

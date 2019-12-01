@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {Header, Home, About, Contact, Users, SignIn, SignUp, NestedUser, Todo} from './components/js'
+import {Header, Home, About, Contact, Users, SignIn, SignUp, NestedUser, Todo, TodoMongoose} from './components/js'
 
 function App() {
   return (
@@ -31,6 +31,9 @@ function App() {
           </Route>
           <Route path="/todo" exact={true}>
             <Todo />
+          </Route>
+          <Route path="/todo-mongoose" exact={true}>
+            <TodoMongoose />
           </Route>
         </Switch>
       </div>
