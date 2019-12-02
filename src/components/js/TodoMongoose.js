@@ -35,7 +35,7 @@ export default class TodoMongoose extends React.Component {
     showTodo = () => {
         const user = JSON.parse(localStorage.getItem("user"))
         axios
-            .get(`https://api-live-mongodb-mongoose-adi.herokuapp.com/todos/`)
+            .get(`https://api-live-mongodb-mongoose-adi.herokuapp.com/todos/email/${user.email}`)
             .then(response => {
                 this.setState({ data: response.data.data});
             })
@@ -50,11 +50,15 @@ export default class TodoMongoose extends React.Component {
 
     addOne = values => {
         const user = JSON.parse(localStorage.getItem("user"));
+        console.log(user._id);
+        
 
         axios
             .post(`https://api-live-mongodb-mongoose-adi.herokuapp.com/todos/`, {
                 ...values,
-                status : true
+                email : user.email,
+                status : true,
+                user : user._id
             })
             .then(response => {
                 if (response.status === 200) {
@@ -66,6 +70,87 @@ export default class TodoMongoose extends React.Component {
                     this.showTodo();
                 }
             });
+    }
+
+    deleteOne = (id, todo) => {
+        swalWithBootstrapButtons.fire({
+            title: 'Are you sure?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Yes, delete it!',
+            cancelButtonText: 'No, cancel!',
+            reverseButtons: true
+          }).then((result) => {
+            if (result.value) {
+                axios
+                    .delete(`https://api-live-mongodb-mongoose-adi.herokuapp.com/todos/${id}`)
+                    .then(response => {
+                        if (response.status === 200) {
+                            swalWithBootstrapButtons.fire(
+                                "Deleted!",
+                                `Todo ${todo} is deleted.`,
+                                "success"
+                            );
+                        }
+                    })
+                    .then(() => {
+                        this.showTodo();
+                    });
+            } else if (
+              result.dismiss === swal.DismissReason.cancel
+            ) {
+              swalWithBootstrapButtons.fire(
+                'Cancelled',
+                'Your imaginary file is safe :)',
+                'error'
+              )
+            }
+          })
+    }
+
+    updateOne = id => {
+        console.log(id);
+        
+        swal.mixin({
+            input: 'text',
+            confirmButtonText: 'Next &rarr;',
+            showCancelButton: true,
+            progressSteps: ['1']
+          }).queue([
+            {
+              title: 'Update Todo',
+              text: 'Change your todo'
+            }
+          ]).then((result) => {
+            if (result.value) {
+              const answer = result.value
+              const data = answer.toString()
+              
+              axios.
+                    put(`https://api-live-mongodb-mongoose-adi.herokuapp.com/todos/${id}`, {todo : data})
+                    .then(response => {
+                        if (response.status === 200) {
+                            
+                            swal.fire({
+                                title: 'All done!',
+                                html: `
+                                  Your Todo has been update:
+                                  <pre><code>${answer}</code></pre>
+                                `,
+                                confirmButtonText: 'Done!'
+                              })
+                              this.showTodo();
+                        } else {
+                            swal.fire(
+                                'Cancelled',
+                                'Theres some error when update',
+                                'error'
+                              )
+                        }
+                    })
+            }
+          })
     }
 
     render () {
