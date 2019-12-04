@@ -55,32 +55,32 @@ function NestedUser(props) {
     }, []);
 
     const onDelete = (idPost, key) => {
-      axios.delete(`https://jsonplaceholder.typicode.com/posts/${idPost}`)
-      .then(res => {
-        if (res.status === 200) {
-          Swal.fire({
-            title: "Are you sure?",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, delete it!"
-          }).then(result => {
-            if (result.value) {
-              Swal.fire(
-                "Deleted!",
-                `Your post with id: ${idPost} is deleted.`,
-                "success"
-              )
-            }
-          })
-        } else {
-          Swal.fire("There is something wrong ", "error")
-        }
-      })
-      .catch(error => {
-        console.log(error)
-      })
+      // axios.delete(`https://jsonplaceholder.typicode.com/posts/${idPost}`)
+      // .then(res => {
+      //   if (res.status === 200) {
+      //     Swal.fire({
+      //       title: "Are you sure?",
+      //       icon: "warning",
+      //       showCancelButton: true,
+      //       confirmButtonColor: "#3085d6",
+      //       cancelButtonColor: "#d33",
+      //       confirmButtonText: "Yes, delete it!"
+      //     }).then(result => {
+      //       if (result.value) {
+      //         Swal.fire(
+      //           "Deleted!",
+      //           `Your post with id: ${idPost} is deleted.`,
+      //           "success"
+      //         )
+      //       }
+      //     })
+      //   } else {
+      //     Swal.fire("There is something wrong ", "error")
+      //   }
+      // })
+      // .catch(error => {
+      //   console.log(error)
+      // })
     };
 
     const onEdit = event => {

@@ -1,6 +1,6 @@
 import React from 'react';
 import {BrowserRouter as Router, Route, Switch} from 'react-router-dom'
-import {Header, Home, About, Contact, Users, SignIn, SignUp, NestedUser, Todo, TodoMongoose} from './components/js'
+import {Header, Home, About, Contact, Users, SignIn, SignUp, NestedUser, Todo, TodoMongoose, TodoMysql, TodoSequelize} from './components/js'
 
 function App() {
   return (
@@ -34,6 +34,12 @@ function App() {
           </Route>
           <Route path="/todo-mongoose" exact={true}>
             <TodoMongoose />
+          </Route>
+          <Route path="/todo-mysql" exact={true}>
+            <TodoMysql />
+          </Route>
+          <Route path="/todo-sequelize" exact={true}>
+            <TodoSequelize />
           </Route>
         </Switch>
       </div>

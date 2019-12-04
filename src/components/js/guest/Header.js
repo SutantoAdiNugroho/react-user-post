@@ -11,8 +11,8 @@ export default function Header() {
         <AppBar position="static">
           <Tabs>
             <Tab style={{margin: "0 10px"}} label="Home" href="/"/>
-            <Tab style={{margin: "0 10px"}} label="About" href="/about"/>
-            <Tab style={{margin: "0 10px"}} label="Contact" href="/contact"/>
+            {/* <Tab style={{margin: "0 10px"}} label="About" href="/about"/>
+            <Tab style={{margin: "0 10px"}} label="Contact" href="/contact"/> */}
             <Tab style={{margin: "0 10px"}} label="Sign In" href="/signin"/>
             <Tab style={{margin: "0 10px"}} label="Sign Up" href="/signup"/>
           </Tabs>

@@ -19,11 +19,11 @@ function Header(props) {
         <AppBar position="static">
           <Tabs>
             <Tab style={{margin: "0 10px"}} label="Home" href="/"/>
-            <Tab style={{margin: "0 10px"}} label="About" href="/about"/>
-            <Tab style={{margin: "0 10px"}} label="Contact" href="/contact"/>
             <Tab style={{margin: "0 10px"}} label="Users" href="/users"/>
             <Tab style={{margin: "0 10px"}} label="Todo" href="/todo"/>
             <Tab style={{margin: "0 10px"}} label="Todo Mongoose" href="/todo-mongoose"/>
+            <Tab style={{margin: "0 10px"}} label="Todo Mysql" href="/todo-mysql"/>
+            <Tab style={{margin: "0 10px"}} label="Todo Sequelize" href="/todo-sequelize"/>
             <Tab style={{margin: "0 10px"}} label="Logout" onClick={logOut}/>
           </Tabs>
         </AppBar>
