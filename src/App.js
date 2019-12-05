@@ -20,7 +20,7 @@ function App() {
           <Route path="/users" exact={true}>
             <Users />
           </Route>
-          <Route path="/users/:name" >
+          <Route path="/users/:id" >
             <NestedUser />
           </Route>
           <Route path="/signin" exact={true}>

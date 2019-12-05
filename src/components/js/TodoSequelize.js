@@ -4,9 +4,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import axios from 'axios'
 import { Formik, ErrorMessage } from "formik";
 import swal from 'sweetalert2'
+import { verify, axiosSequelize } from './helpers'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -34,8 +34,8 @@ export default class Todo extends React.Component {
 
     showTodo = () => {
         const user = JSON.parse(localStorage.getItem("user"))
-        axios
-            .get(`https://api-live-sequelize-cli-adi.herokuapp.com/todos/email/${user.email}`)
+        axiosSequelize()
+            .get(`/todos/email/${verify().email}`)
             .then(response => {
                 this.setState({ data: response.data.data});
             })
@@ -49,14 +49,12 @@ export default class Todo extends React.Component {
     }
 
     addOne = values => {
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        axios
-            .post(`https://api-live-sequelize-cli-adi.herokuapp.com/todos`, {
+        axiosSequelize()
+            .post(`/todos`, {
                 ...values,
                 status: false,
-                email: user.email,
-                name: user.firstName
+                email: verify().email,
+                name: verify().firstName
             })
             .then(response => {
                 if (response.status === 200) {
@@ -81,8 +79,8 @@ export default class Todo extends React.Component {
             reverseButtons: true
           }).then((result) => {
             if (result.value) {
-                axios
-                    .delete(`https://api-live-sequelize-cli-adi.herokuapp.com/todos/${id}`)
+                axiosSequelize()
+                    .delete(`/todos/${id}`)
                     .then(response => {
                         if (response.status === 200) {
                             swalWithBootstrapButtons.fire(
@@ -124,8 +122,8 @@ export default class Todo extends React.Component {
             if (result.value) {
               const answer = result.value
               const data = answer.toString()
-              axios.
-                    put(`https://api-live-sequelize-cli-adi.herokuapp.com/todos/${id}`, {todo : data})
+              axiosSequelize().
+                    put(`/todos/${id}`, {todo : data})
                     .then(response => {
                         if (response.status === 200) {
                             console.log(answer);

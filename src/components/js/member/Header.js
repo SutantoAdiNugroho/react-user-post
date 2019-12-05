@@ -8,12 +8,10 @@ import Tab from '@material-ui/core/Tab';
 function Header(props) {
 
     const logOut = () => {
-        localStorage.removeItem("isLogin");
+        localStorage.removeItem("token");
         
         props.history.push("/signin");
     };
-
-    const user = JSON.parse(localStorage.getItem("user"));
 
     return (
         <AppBar position="static">

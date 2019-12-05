@@ -7,7 +7,7 @@ export const loginValidation = async values => {
 
     try {
         const { data: result } = await axios.post(
-            `${API}/validate/signin`,
+            `http://localhost:5000/validate/signin`,
             values
         );
 

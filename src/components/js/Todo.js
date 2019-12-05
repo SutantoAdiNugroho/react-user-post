@@ -4,9 +4,9 @@ import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import axios from 'axios'
-import { Formik, ErrorMessage } from "formik";
+import { Formik } from "formik";
 import swal from 'sweetalert2'
+import { verify, axios } from './helpers'
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -33,9 +33,8 @@ export default class Todo extends React.Component {
     }
 
     showTodo = () => {
-        const user = JSON.parse(localStorage.getItem("user"))
-        axios
-            .get(`${process.env.REACT_APP_API}/todos/email/${user.email}`)
+        axios()
+            .get(`/todos/email/${verify().email}`)
             .then(response => {
                 this.setState({ data: response.data.data});
             })
@@ -49,13 +48,11 @@ export default class Todo extends React.Component {
     }
 
     addOne = values => {
-        const user = JSON.parse(localStorage.getItem("user"));
-
-        axios
-            .post(`${process.env.REACT_APP_API}/todos`, {
+        axios()
+            .post(`/todos`, {
                 ...values,
-                name: user.firstName,
-                email: user.email
+                name: verify().firstName,
+                email: verify().email
             })
             .then(response => {
                 if (response.status === 200) {
@@ -80,8 +77,8 @@ export default class Todo extends React.Component {
             reverseButtons: true
           }).then((result) => {
             if (result.value) {
-                axios
-                    .delete(`${process.env.REACT_APP_API}/todos/${id}`)
+                axios()
+                    .delete(`/todos/${id}`)
                     .then(response => {
                         if (response.status === 200) {
                             swalWithBootstrapButtons.fire(
@@ -107,8 +104,6 @@ export default class Todo extends React.Component {
     }
 
     updateOne = id => {
-        console.log(id);
-        
         swal.mixin({
             input: 'text',
             confirmButtonText: 'Next &rarr;',
@@ -122,8 +117,8 @@ export default class Todo extends React.Component {
           ]).then((result) => {
             if (result.value) {
               const answer = result.value
-              axios.
-                    put(`${process.env.REACT_APP_API}/todos/${id}`, {todo : answer})
+              axios().
+                    put(`/todos/${id}`, {todo : answer})
                     .then(response => {
                         if (response.status === 200) {
                             console.log(answer);
