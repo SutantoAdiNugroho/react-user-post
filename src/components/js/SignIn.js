@@ -73,10 +73,8 @@ function SignIn(props) {
                     validate={loginValidation}
                     onSubmit={values => {
                         axios
-                            .post(`http://localhost:5000/users/login`, values)
+                            .post(`${process.env.REACT_APP_API}/users/login`, values)
                             .then(response => {
-                                console.log(response);
-                                
                                 if (response.status === 200) {
                                     localStorage.setItem(
                                         "token",

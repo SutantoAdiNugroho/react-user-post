@@ -78,7 +78,7 @@ function SignUp(props) {
                 validate={validationForm}
                 onSubmit={(values, {setSubmitting}) => {
                   Axios
-                    .post(`http://localhost:5000/users`, values)
+                    .post(`${process.env.REACT_APP_API}/users`, values)
                     .then(response => {
                       if (response.status === 201) {
                         props.history.push("/signin")

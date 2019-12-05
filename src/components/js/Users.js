@@ -37,7 +37,7 @@ export default class Users extends Component {
 
     componentDidMount = () => {
         axios
-            .get(`${process.env.REACT_APP_API_LIST_USERS}/users`)
+            .get(`${process.env.REACT_APP_API_PLACEHOLDER}/users`)
             .then(response => {
                 this.setState({data : response.data});
             })

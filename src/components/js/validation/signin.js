@@ -1,13 +1,12 @@
 import axios from "axios";
 
 export const loginValidation = async values => {
-    const API = process.env.REACT_APP_API;
 
     let errors = {};
 
     try {
         const { data: result } = await axios.post(
-            `http://localhost:5000/validate/signin`,
+            `${process.env.REACT_APP_API}/validate/signin`,
             values
         );
 
